@@ -313,7 +313,7 @@ export default function App() {
               <div className="space-y-3 text-sm text-slate-400">
                 <div className="flex items-center gap-3">
                   <Mail className="w-4 h-4 text-teal-400" />
-                  <span>peeyushjss@gmail.com</span>
+                  <span>peeyush1891@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="w-4 h-4 text-teal-400" />
