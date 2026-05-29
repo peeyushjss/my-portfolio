@@ -16,6 +16,7 @@ import {
   Mail,
   Phone,
   MapPin
+  , Menu, X
 } from 'lucide-react';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [hoveredSkillCategory, setHoveredSkillCategory] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -173,8 +175,43 @@ export default function App() {
               </button>
             ))}
           </nav>
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setMobileOpen((s) => !s)}
+              aria-label="Toggle menu"
+              className="p-2 bg-slate-900 border border-slate-800 rounded text-slate-300 hover:text-teal-400 transition-colors"
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
       </header>
+
+      {/* Mobile Nav Panel */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.nav
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18 }}
+            className="md:hidden fixed top-16 left-0 right-0 z-40 bg-slate-950/95 border-b border-slate-900/60 backdrop-blur-md"
+          >
+            <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col space-y-2">
+              {['About', 'Skills', 'Experience', 'Contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => { scrollToSection(item); setMobileOpen(false); }}
+                  className={`text-left w-full px-3 py-2 rounded font-mono uppercase text-sm ${activeSection === item ? 'text-teal-400' : 'text-slate-300 hover:text-teal-400'}`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
 
       {/* Main Container */}
       <main className="max-w-6xl mx-auto px-6 pt-32 pb-24 space-y-36 relative z-10">
@@ -225,14 +262,14 @@ export default function App() {
             className="flex flex-wrap gap-4 mb-16"
           >
             <button
-              onClick={() => scrollToSection('experience')}
+              onClick={() => scrollToSection('Experience')}
               className="group px-6 py-3 bg-teal-500 hover:bg-teal-400 text-slate-950 font-semibold rounded transition-all flex items-center gap-2 shadow-lg shadow-teal-500/10"
             >
               Explore History
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection('Contact')}
               className="px-6 py-3 bg-slate-900 border border-slate-800 hover:border-teal-500/50 text-slate-300 hover:text-teal-400 font-semibold rounded transition-all"
             >
               Get In Touch
